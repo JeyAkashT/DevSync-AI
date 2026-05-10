@@ -1,0 +1,60 @@
+spring:
+  application:
+    name: devsync-ai-backend
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/devsync_ai}
+    username: ${SPRING_DATASOURCE_USERNAME:devsync}
+    password: ${SPRING_DATASOURCE_PASSWORD:devsync123}
+    hikari:
+      maximum-pool-size: ${SPRING_DATASOURCE_POOL_MAX:10}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        default_schema: devsync
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    schemas: devsync
+    default-schema: devsync
+    create-schemas: true
+
+server:
+  servlet:
+    context-path: /
+  error:
+    include-message: never
+    include-binding-errors: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+# Symmetric JWT (HS256). Require a long random secret in production (≥ 32 bytes UTF-8).
+devsync:
+  jwt:
+    secret: ${DEVSYNC_JWT_SECRET:devsync-development-jwt-signing-secret-key}
+    expiration-seconds: ${DEVSYNC_JWT_EXPIRATION_SECONDS:86400}
+    issuer: ${DEVSYNC_JWT_ISSUER:devsync-ai}
+  seed:
+    enabled: ${DEVSYNC_SEED_ENABLED:false}
+    demo-email: ${DEVSYNC_SEED_DEMO_EMAIL:pm-demo@devsync.ai}
+    demo-password: ${DEVSYNC_SEED_DEMO_PASSWORD:DemoPass123!}
+    org-slug: ${DEVSYNC_SEED_ORG_SLUG:devsync-demo}
+  cors:
+    allowed-origins: ${DEVSYNC_CORS_ALLOWED_ORIGINS:http://localhost:5173}
+
+logging:
+  level:
+    root: INFO
+    com.devsync.ai: DEBUG
