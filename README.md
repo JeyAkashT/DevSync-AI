@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # DevSync AI
 
 Production-oriented scaffold for an AI-powered DevOps and team collaboration platform.
@@ -66,3 +67,6 @@ App: `http://localhost:5173`
 ## License
 
 Proprietary — update as needed.
+=======
+# DevSync-AI
+>>>>>>> 62b302c6546f7ee84cbf0f985f9ae87a93a09960
